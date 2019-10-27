@@ -10,9 +10,10 @@ const platformModule = require("tns-core-modules/platform");
 export class ScoreInputComponent implements OnInit {
 
     @Output() hit = new EventEmitter<number>();
-    @Output() undoTapped = new EventEmitter<number>();
-    @Output() doubleTapped = new EventEmitter<number>();
-    @Output() tripleTapped = new EventEmitter<number>();
+    @Output() miss = new EventEmitter<void>();
+    @Output() undoTapped = new EventEmitter<void>();
+    @Output() doubleTapped = new EventEmitter<void>();
+    @Output() tripleTapped = new EventEmitter<void>();
 
     columnWidth = platformModule.screen.mainScreen.widthDIPs / 5;
 
@@ -37,5 +38,9 @@ export class ScoreInputComponent implements OnInit {
     }
     onTapBull() {
         this.hit.emit(25);
+    }
+
+    onTapMiss() {
+        this.miss.emit();
     }
 }

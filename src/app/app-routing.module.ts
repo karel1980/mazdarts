@@ -2,13 +2,15 @@ import { NgModule } from "@angular/core";
 import { NativeScriptRouterModule } from "nativescript-angular/router";
 import { Routes } from "@angular/router";
 
-import { MainComponent } from "./main.component";
-import { Game301Component } from "./game301/game301.component";
+import { ChooseGameComponent } from "./choose-game/choose-game.component";
+import { GameX01Component } from "./gamex01/gamex01.component";
+import {ChoosePlayersComponent} from "~/app/choose-players/choose-players.component";
 
 const routes: Routes = [
-    { path: "", redirectTo: "/main", pathMatch: "full" },
-    { path: "main", component: MainComponent },
-    { path: "games/301", component: Game301Component }
+    { path: "", redirectTo: "/choose-game", pathMatch: "full" },
+    { path: "choose-game", component: ChooseGameComponent },
+    { path: "choose-players", component: ChoosePlayersComponent },
+    { path: "games/x01", component: GameX01Component }
 ];
 
 @NgModule({

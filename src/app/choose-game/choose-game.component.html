@@ -25,9 +25,7 @@ class names available for styling your app at https://docs.nativescript.org/ui/t
 -->
 <Page>
     <StackLayout class="home-panel">
-        <Button text="New game" (tap)="startNewGame()" class="btn btn-primary"></Button>
-        <StackLayout *ngIf="showGames">
-            <Button text="301" (tap)="start301()" class="btn"></Button>
-        </StackLayout>
+        <Button text="301" (tap)="start301()" class="btn"></Button>
+        <Button text="501" (tap)="start501()" class="btn"></Button>
     </StackLayout>
 </Page>

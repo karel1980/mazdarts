@@ -1,0 +1,16 @@
+<ActionBar title="301" class="action-bar"></ActionBar>
+<StackLayout *ngIf="game">
+    <StackLayout>
+        <StackLayout *ngFor="let player of game.players; let i = index">
+            <Label text="{{player}}: {{game.state.scores[i]}}"></Label>
+        </StackLayout>
+    </StackLayout>
+    <StackLayout>
+        <ns-score-input
+            (hit)="onHit($event)"
+            (doubleTapped)="onDoubleTapped($event)"
+            (tripleTapped)="onTripleTapped($event)"
+            (miss)="onMiss()"
+        ></ns-score-input>
+    </StackLayout>
+</StackLayout>

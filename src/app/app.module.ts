@@ -3,11 +3,12 @@ import {NativeScriptModule} from "nativescript-angular/nativescript.module";
 
 import {AppRoutingModule} from "./app-routing.module";
 import {AppComponent} from "./app.component";
-import {MainComponent} from "./main.component";
-import {Game301Component} from "./game301/game301.component";
+import {ChooseGameComponent} from "./choose-game/choose-game.component";
+import {GameX01Component} from "./gamex01/gamex01.component";
 
 import {NativeScriptFormsModule} from "nativescript-angular/forms";
 import { ScoreInputComponent } from './score-input/score-input.component';
+import { ChoosePlayersComponent } from './choose-players/choose-players.component';
 
 // Uncomment and add to NgModule imports if you need to use the HttpClient wrapper
 // import { NativeScriptHttpClientModule } from "nativescript-angular/http-client";
@@ -23,8 +24,9 @@ import { ScoreInputComponent } from './score-input/score-input.component';
     ],
     declarations: [
         AppComponent,
-        MainComponent,
-        Game301Component,
+        ChooseGameComponent,
+        ChoosePlayersComponent,
+        GameX01Component,
         ScoreInputComponent
     ],
     providers: [],
