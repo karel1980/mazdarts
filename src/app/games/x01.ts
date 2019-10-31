@@ -45,8 +45,10 @@ function applyHit(state: GameState, action: HitAction): GameState {
     let score = state.scores[state.currentPlayer];
 
     let hitValue = action.payload.value * action.payload.multiplyer;
+    let remaining = score - hitValue;
+    let burned: boolean = remaining < 0 || remaining == 1 || (remaining == 0 && action.payload.multiplyer != 2);
 
-    if (hitValue > score) {
+    if (burned) {
         return {
             ...state,
             currentPlayer: (state.currentPlayer + 1) % state.scores.length,
@@ -56,10 +58,10 @@ function applyHit(state: GameState, action: HitAction): GameState {
 
     return {
         ...state,
-        scores: state.scores.map((item, index) => index == state.currentPlayer ? item - hitValue : item),
-        currentPlayer: (state.currentPlayer + state.currentTurnMoves == 2 ? 1 : 0) % state.scores.length,
+        scores: state.scores.map((item, index) => index == state.currentPlayer ? remaining : item),
+        currentPlayer: (state.currentPlayer + (state.currentTurnMoves == 2 ? 1 : 0)) % state.scores.length,
         currentTurnMoves: (state.currentTurnMoves + 1) % 3,
-        winner: hitValue == score ? state.currentPlayer : undefined
+        winner: remaining == 0 ? state.currentPlayer : undefined
     };
 }
 

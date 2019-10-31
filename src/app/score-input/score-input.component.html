@@ -24,8 +24,8 @@
     <Button col="4" row="3" text="20" (tap)="onTapValue(20)" class="btn btn-rounded-sm"></Button>
 
     <Button col="0" row="4" text="bull" (tap)="onTapBull()" class="btn btn-rounded-sm"></Button>
-    <Button col="1" row="4" text="double" (tap)="onTapDouble()" class="btn btn-rounded-sm"></Button>
-    <Button col="2" row="4" text="triple" (tap)="onTapTriple()" class="btn btn-rounded-sm"></Button>
+    <Button col="1" row="4" text="double" (tap)="onTapDouble()" class="btn btn-rounded-sm" [ngClass]="{'btn-primary': highlightDouble}"></Button>
+    <Button col="2" row="4" text="triple" (tap)="onTapTriple()" class="btn btn-rounded-sm" [ngClass]="{'btn-primary': highlightTriple}"></Button>
     <Button col="5" row="4" text="miss" (tap)="onTapMiss()" class="btn btn-rounded-sm"></Button>
 
 </GridLayout>

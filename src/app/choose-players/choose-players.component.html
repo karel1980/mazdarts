@@ -1,0 +1,16 @@
+<ScrollView>
+    <StackLayout>
+        <StackLayout *ngFor="let player of players; let i = index">
+            <GridLayout (tap)="deletePlayer(i)" columns="100, *, 100" rows="auto">
+                <Button text="X" col="0" row="0" (tap)="deletePlayer(i)"></Button>
+                <Label [text]="player.name" col="1" row="0"></Label>
+                <Button *ngIf="!player.checked" text="Select" col="2" row="0" (tap)="togglePlayer(player)"></Button>
+                <Button *ngIf="player.checked" text="Deselect" col="2" row="0" (tap)="togglePlayer(player)"></Button>
+            </GridLayout>
+        </StackLayout>
+        <StackLayout>
+            <Button text="Add player" (tap)="addPlayer()"></Button>
+            <Button [ngClass]="{ 'btn-active': hasPlayers }" text="Start game" (tap)="startGame()"></Button>
+        </StackLayout>
+    </StackLayout>
+</ScrollView>

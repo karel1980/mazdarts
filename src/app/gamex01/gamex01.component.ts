@@ -25,6 +25,7 @@ export class GameX01Component implements OnInit {
     game: X01;
 
     hitType: HitType = HitType.SINGLE;
+    hitTypeEnum = HitType;
 
     constructor(private router: Router, private activatedRoute: ActivatedRoute) {
     }

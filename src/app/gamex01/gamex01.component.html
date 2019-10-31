@@ -1,16 +1,24 @@
 <ActionBar title="301" class="action-bar"></ActionBar>
-<StackLayout *ngIf="game">
-    <StackLayout>
-        <StackLayout *ngFor="let player of game.players; let i = index">
-            <Label text="{{player}}: {{game.state.scores[i]}}"></Label>
+<ScrollView>
+    <StackLayout *ngIf="game && game.state.winner==undefined ">
+        <StackLayout>
+            <StackLayout *ngFor="let player of game.players; let i = index">
+                <Label text="{{player}}: {{game.state.scores[i]}}"></Label>
+            </StackLayout>
+        </StackLayout>
+        <StackLayout>
+            <ns-score-input
+                    [highlightDouble]="hitType == hitTypeEnum.DOUBLE"
+                    [highlightTriple]="hitType == hitTypeEnum.TRIPLE"
+                    (hit)="onHit($event)"
+                    (doubleTapped)="onDoubleTapped($event)"
+                    (tripleTapped)="onTripleTapped($event)"
+                    (miss)="onMiss()"
+            ></ns-score-input>
         </StackLayout>
     </StackLayout>
-    <StackLayout>
-        <ns-score-input
-            (hit)="onHit($event)"
-            (doubleTapped)="onDoubleTapped($event)"
-            (tripleTapped)="onTripleTapped($event)"
-            (miss)="onMiss()"
-        ></ns-score-input>
+    <StackLayout *ngIf="game && game.state.winner!==undefined">
+        <Label text="Winner: {{game.players[game.state.winner]}}"></Label>
+        <Button text="New game" [nsRouterLink]="['/choose-game']" pageTransition="slide" clearHistory="true"></Button>
     </StackLayout>
-</StackLayout>
+</ScrollView>

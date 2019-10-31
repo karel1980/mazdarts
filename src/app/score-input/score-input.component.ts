@@ -1,4 +1,4 @@
-import {Component, EventEmitter, OnInit, Output} from '@angular/core';
+import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
 
 const platformModule = require("tns-core-modules/platform");
 
@@ -9,6 +9,8 @@ const platformModule = require("tns-core-modules/platform");
 })
 export class ScoreInputComponent implements OnInit {
 
+    @Input() highlightDouble: boolean;
+    @Input() highlightTriple: boolean;
     @Output() hit = new EventEmitter<number>();
     @Output() miss = new EventEmitter<void>();
     @Output() undoTapped = new EventEmitter<void>();
@@ -31,10 +33,10 @@ export class ScoreInputComponent implements OnInit {
         this.undoTapped.emit();
     }
     onTapDouble() {
-        this.undoTapped.emit();
+        this.doubleTapped.emit();
     }
     onTapTriple() {
-        this.undoTapped.emit();
+        this.tripleTapped.emit();
     }
     onTapBull() {
         this.hit.emit(25);
