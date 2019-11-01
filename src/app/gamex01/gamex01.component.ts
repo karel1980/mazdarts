@@ -1,7 +1,11 @@
-import {Component, OnChanges, OnInit, SimpleChanges} from "@angular/core";
+import {Component, OnChanges, OnInit, SimpleChanges, ViewChild} from "@angular/core";
 import {confirm, ConfirmOptions} from "tns-core-modules/ui/dialogs";
 import {ActivatedRoute, Router} from "@angular/router";
 import {double, miss, single, triple, X01} from "~/app/games/x01";
+import {RadListView} from "nativescript-ui-listview";
+import {PlayersViewModel} from "~/app/gamex01/playersViewModel";
+import { ObservableArray } from "tns-core-modules/data/observable-array/observable-array";
+import {RadListViewComponent} from "nativescript-ui-listview/angular";
 
 interface Player {
     name: string,
@@ -15,6 +19,12 @@ interface Contestant {
 
 enum HitType { SINGLE, DOUBLE, TRIPLE }
 
+interface PlayerListItem {
+    isCurrent: boolean,
+    name: string,
+    score: number
+}
+
 @Component({
     selector: "ns-details",
     templateUrl: "./gamex01.component.html",
@@ -27,13 +37,17 @@ export class GameX01Component implements OnInit {
     hitType: HitType = HitType.SINGLE;
     hitTypeEnum = HitType;
 
+    @ViewChild('playerView', { static: true }) playerView: RadListViewComponent;
+    playerListItems = new ObservableArray<PlayerListItem>();
+
     constructor(private router: Router, private activatedRoute: ActivatedRoute) {
     }
 
     ngOnInit(): void {
         this.activatedRoute.queryParams.subscribe(
             p => this.game = new X01(p.players, p.gameType)
-        )
+        );
+        this.updatePlayerList();
     }
 
     onHit(value: number) {
@@ -49,6 +63,9 @@ export class GameX01Component implements OnInit {
                 break;
         }
         this.hitType = HitType.SINGLE;
+
+        this.updatePlayerList();
+        this.scrollCurrentPlayerIntoView();
     }
 
     onDoubleTapped() {
@@ -62,5 +79,21 @@ export class GameX01Component implements OnInit {
     onMiss() {
         this.game.perform(miss());
         this.hitType = HitType.SINGLE;
+
+        this.updatePlayerList();
+        this.scrollCurrentPlayerIntoView();
     }
+
+    private updatePlayerList() {
+        this.playerListItems = new ObservableArray<PlayerListItem>(this.game.players.map((player, idx) => ({
+            name: player,
+            isCurrent: idx == this.game.state.currentPlayer,
+            score: this.game.state.scores[idx]
+        })));
+    }
+
+    private scrollCurrentPlayerIntoView() {
+    }
+
+
 }

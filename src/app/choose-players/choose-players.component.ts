@@ -16,6 +16,20 @@ export class ChoosePlayersComponent implements OnInit {
 
     players = [
         {name: "karel", checked: true},
+        {name: "karel", checked: true},
+        {name: "karexl", checked: true},
+        {name: "karel", checked: true},
+        {name: "karel", checked: true},
+        {name: "karel", checked: true},
+        {name: "karefffl", checked: true},
+        {name: "karel", checked: true},
+        {name: "karel", checked: true},
+        {name: "karel", checked: true},
+        {name: "karel", checked: true},
+        {name: "karel", checked: true},
+        {name: "karel", checked: true},
+        {name: "karel", checked: true},
+        {name: "karel", checked: true},
         {name: "felix", checked: true}
     ];
     hasPlayers: boolean;

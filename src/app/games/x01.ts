@@ -69,10 +69,9 @@ function applyMiss(state: GameState): GameState {
     if (state.winner !== undefined) {
         return state;
     }
-
     return {
         ...state,
-        currentPlayer: (state.currentPlayer + state.currentTurnMoves == 2 ? 1 : 0) % state.scores.length,
+        currentPlayer: (state.currentPlayer + (state.currentTurnMoves == 2 ? 1 : 0)) % state.scores.length,
         currentTurnMoves: (state.currentTurnMoves + 1) % 3
     }
 }

@@ -1,24 +1,42 @@
-<ActionBar title="301" class="action-bar"></ActionBar>
-<ScrollView>
-    <StackLayout *ngIf="game && game.state.winner==undefined ">
-        <StackLayout>
-            <StackLayout *ngFor="let player of game.players; let i = index">
-                <Label text="{{player}}: {{game.state.scores[i]}}"></Label>
-            </StackLayout>
-        </StackLayout>
-        <StackLayout>
-            <ns-score-input
-                    [highlightDouble]="hitType == hitTypeEnum.DOUBLE"
-                    [highlightTriple]="hitType == hitTypeEnum.TRIPLE"
-                    (hit)="onHit($event)"
-                    (doubleTapped)="onDoubleTapped($event)"
-                    (tripleTapped)="onTripleTapped($event)"
-                    (miss)="onMiss()"
-            ></ns-score-input>
-        </StackLayout>
+<ActionBar>
+    <GridLayout columns="*, auto" rows="auto" width="100%">
+        <Label text="301" row="0" col="0"></Label>
+        <GridLayout columns="20, 20, 20" row="0" col="1">
+            <Label [text]="game.state.currentTurnMoves > 0 ? '->' : ''" row="0" col="0"
+                   style="border-width: 1px; border-color: black"></Label>
+            <Label [text]="game.state.currentTurnMoves > 1 ? '->' : ''" row="0" col="1"
+                   style="border-width: 1px; border-color: black"></Label>
+            <Label [text]="game.state.currentTurnMoves > 2 ? '->' : ''" row="0" col="2"
+                   style="border-width: 1px; border-color: black"></Label>
+        </GridLayout>
+    </GridLayout>
+</ActionBar>
+<DockLayout>
+    <StackLayout dock="bottom" *ngIf="game && game.state.winner==undefined">
+        <ns-score-input
+                [highlightDouble]="hitType == hitTypeEnum.DOUBLE"
+                [highlightTriple]="hitType == hitTypeEnum.TRIPLE"
+                (hit)="onHit($event)"
+                (doubleTapped)="onDoubleTapped()"
+                (tripleTapped)="onTripleTapped()"
+                (miss)="onMiss()"
+        ></ns-score-input>
     </StackLayout>
     <StackLayout *ngIf="game && game.state.winner!==undefined">
         <Label text="Winner: {{game.players[game.state.winner]}}"></Label>
-        <Button text="New game" [nsRouterLink]="['/choose-game']" pageTransition="slide" clearHistory="true"></Button>
+        <Button text="New game" [nsRouterLink]="['/choose-game']" pageTransition="slide"
+                clearHistory="true"></Button>
     </StackLayout>
-</ScrollView>
+    <RadListView #playerView [items]="playerListItems" *ngIf="game && game.state.winner==undefined">
+        <ListViewLinearLayout tkListViewLayout scrollDirection="Vertical" itemInsertAnimation="Default"
+                              itemDeleteAnimation="Default"></ListViewLinearLayout>
+
+        <ng-template tkListItemTemplate let-item="item">
+            <GridLayout columns="30, 50%, 50%" width="250">
+                <Label text="*" *ngIf="item.isCurrent" row="0" col="0"></Label>
+                <Label text="{{item.name}}" row="0" col="1"></Label>
+                <Label text="{{item.score}}" row="0" col="2"></Label>
+            </GridLayout>
+        </ng-template>
+    </RadListView>
+</DockLayout>

@@ -9,6 +9,7 @@ import {GameX01Component} from "./gamex01/gamex01.component";
 import {NativeScriptFormsModule} from "nativescript-angular/forms";
 import { ScoreInputComponent } from './score-input/score-input.component';
 import { ChoosePlayersComponent } from './choose-players/choose-players.component';
+import {NativeScriptUIListViewModule} from "nativescript-ui-listview/angular";
 
 // Uncomment and add to NgModule imports if you need to use the HttpClient wrapper
 // import { NativeScriptHttpClientModule } from "nativescript-angular/http-client";
@@ -20,7 +21,8 @@ import { ChoosePlayersComponent } from './choose-players/choose-players.componen
     imports: [
         NativeScriptModule,
         NativeScriptFormsModule,
-        AppRoutingModule
+        AppRoutingModule,
+        NativeScriptUIListViewModule
     ],
     declarations: [
         AppComponent,
