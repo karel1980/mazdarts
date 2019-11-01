@@ -41,11 +41,7 @@ export class GameX01Component implements OnInit {
     }
 
     ngOnInit(): void {
-        this.activatedRoute.queryParams.subscribe(
-            p => {
-                return this.game = new X01(p.players, p.gameType);
-            }
-        );
+        this.setupGame();
         this.updatePlayerList();
     }
 
@@ -83,6 +79,14 @@ export class GameX01Component implements OnInit {
         this.scrollCurrentPlayerIntoView();
     }
 
+    private setupGame() {
+        this.activatedRoute.queryParams.subscribe(
+            p => {
+                return this.game = new X01(p.players, p.gameType);
+            }
+        );
+    }
+
     private updatePlayerList() {
         this.playerListItems = this.game.players.map((player, idx) => ({
             name: player,
@@ -91,9 +95,8 @@ export class GameX01Component implements OnInit {
         }));
     }
 
+
     private scrollCurrentPlayerIntoView() {
         this.playerListView.nativeElement.scrollToIndexAnimated(this.game.state.currentPlayer);
     }
-
-
 }
