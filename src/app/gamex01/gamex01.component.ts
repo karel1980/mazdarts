@@ -1,11 +1,7 @@
-import {Component, OnChanges, OnInit, SimpleChanges, ViewChild} from "@angular/core";
-import {confirm, ConfirmOptions} from "tns-core-modules/ui/dialogs";
+import {Component, OnInit, ViewChild} from "@angular/core";
 import {ActivatedRoute, Router} from "@angular/router";
 import {double, miss, single, triple, X01} from "~/app/games/x01";
-import {RadListView} from "nativescript-ui-listview";
-import {PlayersViewModel} from "~/app/gamex01/playersViewModel";
-import { ObservableArray } from "tns-core-modules/data/observable-array/observable-array";
-import {RadListViewComponent} from "nativescript-ui-listview/angular";
+import {ListViewComponent} from "nativescript-angular";
 
 interface Player {
     name: string,
@@ -33,19 +29,22 @@ interface PlayerListItem {
 export class GameX01Component implements OnInit {
 
     game: X01;
+    gameType: string;
 
     hitType: HitType = HitType.SINGLE;
     hitTypeEnum = HitType;
 
-    @ViewChild('playerView', { static: true }) playerView: RadListViewComponent;
-    playerListItems = new ObservableArray<PlayerListItem>();
+    @ViewChild('playerListView', {static: false}) playerListView: ListViewComponent;
+    playerListItems: PlayerListItem[] = [];
 
     constructor(private router: Router, private activatedRoute: ActivatedRoute) {
     }
 
     ngOnInit(): void {
         this.activatedRoute.queryParams.subscribe(
-            p => this.game = new X01(p.players, p.gameType)
+            p => {
+                return this.game = new X01(p.players, p.gameType);
+            }
         );
         this.updatePlayerList();
     }
@@ -69,11 +68,11 @@ export class GameX01Component implements OnInit {
     }
 
     onDoubleTapped() {
-        this.hitType = this.hitType != HitType.DOUBLE ? HitType.DOUBLE: HitType.SINGLE;
+        this.hitType = this.hitType != HitType.DOUBLE ? HitType.DOUBLE : HitType.SINGLE;
     }
 
     onTripleTapped() {
-        this.hitType = this.hitType != HitType.TRIPLE ? HitType.TRIPLE: HitType.SINGLE;
+        this.hitType = this.hitType != HitType.TRIPLE ? HitType.TRIPLE : HitType.SINGLE;
     }
 
     onMiss() {
@@ -85,14 +84,15 @@ export class GameX01Component implements OnInit {
     }
 
     private updatePlayerList() {
-        this.playerListItems = new ObservableArray<PlayerListItem>(this.game.players.map((player, idx) => ({
+        this.playerListItems = this.game.players.map((player, idx) => ({
             name: player,
             isCurrent: idx == this.game.state.currentPlayer,
             score: this.game.state.scores[idx]
-        })));
+        }));
     }
 
     private scrollCurrentPlayerIntoView() {
+        this.playerListView.nativeElement.scrollToIndexAnimated(this.game.state.currentPlayer);
     }
 
 

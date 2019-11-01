@@ -1,6 +1,6 @@
 import {Component, OnInit} from '@angular/core';
 import * as dialogs from "tns-core-modules/ui/dialogs";
-import {Router} from "@angular/router";
+import {ActivatedRoute, Router} from "@angular/router";
 
 interface Player {
     name: string,
@@ -16,25 +16,16 @@ export class ChoosePlayersComponent implements OnInit {
 
     players = [
         {name: "karel", checked: true},
-        {name: "karel", checked: true},
-        {name: "karexl", checked: true},
-        {name: "karel", checked: true},
-        {name: "karel", checked: true},
-        {name: "karel", checked: true},
-        {name: "karefffl", checked: true},
-        {name: "karel", checked: true},
-        {name: "karel", checked: true},
-        {name: "karel", checked: true},
-        {name: "karel", checked: true},
-        {name: "karel", checked: true},
-        {name: "karel", checked: true},
-        {name: "karel", checked: true},
-        {name: "karel", checked: true},
         {name: "felix", checked: true}
     ];
     hasPlayers: boolean;
 
-    constructor(private router: Router) {
+    gameType: string;
+
+    constructor(private router: Router, private route: ActivatedRoute) {
+        route.queryParams.subscribe((params) => {
+            this.gameType = params['gameType'];
+        })
     }
 
     ngOnInit() {
@@ -70,7 +61,7 @@ export class ChoosePlayersComponent implements OnInit {
     startGame() {
         if (this.hasPlayers) {
             this.router.navigate(['/games/x01'], {
-                queryParams: { gameType: '301', players: this.players.filter(p => p.checked).map(p => p.name) }
+                queryParams: { gameType: this.gameType, players: this.players.filter(p => p.checked).map(p => p.name) }
             })
         }
     }
