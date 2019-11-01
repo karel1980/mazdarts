@@ -84,4 +84,17 @@ describe("X01", function () {
         });
     });
 
+    describe('undo', () => {
+        it('reverts the game to its previous state', () => {
+            let state = game.state;
+            console.log('BEFORE', state);
+            game.perform(single(10));
+            console.log('AFTER', state);
+
+            game.undo();
+
+            expect(game.state).toEqual(state);
+        });
+    });
+
 });

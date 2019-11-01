@@ -27,7 +27,10 @@
         <Button text="New game" [nsRouterLink]="['/choose-game']" pageTransition="slide"
                 clearHistory="true"></Button>
     </StackLayout>
-    <ListView #playerListView [items]="playerListItems" dock="top" *ngIf="game && game.state.winner==undefined">
+    <StackLayout dock="top" *ngIf="game && game.state.winner==undefined">
+        <Button text="Undo" (tap)="onUndoTapped()"></Button>
+    </StackLayout>
+    <ListView dock="center" #playerListView [items]="playerListItems" dock="top" *ngIf="game && game.state.winner==undefined">
         <ng-template let-player="item" let-i="index" let-odd="odd" let-even="even">
             <GridLayout columns="30, 50%, 50%">
                 <Label text="*" *ngIf="player.isCurrent" row="0" col="0"></Label>

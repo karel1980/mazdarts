@@ -29,6 +29,8 @@ interface GameState {
     winner: number;
 }
 
+const INVALID_ACTION_RESULT = null;
+
 const applyAction = (state: GameState, action: Action): GameState => {
     if (action.type == ActionType.HIT) {
         return applyHit(state, action as HitAction);
@@ -40,7 +42,7 @@ const applyAction = (state: GameState, action: Action): GameState => {
 
 function applyHit(state: GameState, action: HitAction): GameState {
     if (state.winner !== undefined) {
-        return state;
+        return INVALID_ACTION_RESULT;
     }
     let score = state.scores[state.currentPlayer];
 
@@ -67,7 +69,7 @@ function applyHit(state: GameState, action: HitAction): GameState {
 
 function applyMiss(state: GameState): GameState {
     if (state.winner !== undefined) {
-        return state;
+        return INVALID_ACTION_RESULT;
     }
     return {
         ...state,
@@ -78,6 +80,7 @@ function applyMiss(state: GameState): GameState {
 
 export class X01 {
     state;
+    history: GameState[] = [];
 
     constructor(public players: string[], private initialScore: number) {
         this.state = {
@@ -86,10 +89,23 @@ export class X01 {
             currentTurnMoves: 0,
             winner: undefined
         };
+        this.history.push(this.state);
     }
 
     perform(action: Action) {
-        this.state = applyAction(this.state, action);
+        let newState = applyAction(this.state, action);
+        if (newState == INVALID_ACTION_RESULT) {
+            return;
+        }
+        this.state = newState;
+        this.history.push(newState);
     }
 
+    undo() {
+        if (this.history.length == 1) {
+            return;
+        }
+        this.history.pop();
+        this.state = this.history[this.history.length - 1];
+    }
 }

@@ -79,10 +79,17 @@ export class GameX01Component implements OnInit {
         this.scrollCurrentPlayerIntoView();
     }
 
+    onUndoTapped() {
+        this.game.undo();
+        this.updatePlayerList();
+        this.scrollCurrentPlayerIntoView();
+    }
+
     private setupGame() {
         this.activatedRoute.queryParams.subscribe(
             p => {
-                return this.game = new X01(p.players, p.gameType);
+                this.game = new X01(p.players, p.gameType);
+                this.gameType = p.gameType;
             }
         );
     }
@@ -94,7 +101,6 @@ export class GameX01Component implements OnInit {
             score: this.game.state.scores[idx]
         }));
     }
-
 
     private scrollCurrentPlayerIntoView() {
         this.playerListView.nativeElement.scrollToIndexAnimated(this.game.state.currentPlayer);

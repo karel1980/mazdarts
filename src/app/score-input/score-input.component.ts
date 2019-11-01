@@ -13,7 +13,6 @@ export class ScoreInputComponent implements OnInit {
     @Input() highlightTriple: boolean;
     @Output() hit = new EventEmitter<number>();
     @Output() miss = new EventEmitter<void>();
-    @Output() undoTapped = new EventEmitter<void>();
     @Output() doubleTapped = new EventEmitter<void>();
     @Output() tripleTapped = new EventEmitter<void>();
 
@@ -29,9 +28,6 @@ export class ScoreInputComponent implements OnInit {
         this.hit.emit(value);
     }
 
-    onTapUndo() {
-        this.undoTapped.emit();
-    }
     onTapDouble() {
         this.doubleTapped.emit();
     }
