@@ -1,14 +1,13 @@
 <ActionBar>
     <GridLayout columns="*, auto" rows="auto" width="100%">
         <Label text="{{gameType}}" row="0" col="0"></Label>
-        <GridLayout columns="20, 20, 20" row="0" col="1" *ngIf="game && game.state.winner==undefined">
-            <Label text="{{game.state.currentTurnMoves > 0 ? '->' : ''}}" row="0" col="0"
-                   style="border-width: 1px; border-color: black"></Label>
-            <Label text="{{game.state.currentTurnMoves > 1 ? '->' : ''}}" row="0" col="1"
-                   style="border-width: 1px; border-color: black"></Label>
-            <Label text="{{game.state.currentTurnMoves > 2 ? '->' : ''}}" row="0" col="2"
-                   style="border-width: 1px; border-color: black"></Label>
-        </GridLayout>
+        <StackLayout class="throw-indicator" row="0" col="1">
+            <GridLayout columns="20, 20, 20" *ngIf="game && game.state.winner==undefined">
+                <Label text="{{game.state.currentTurnMoves > 0 ? '->' : ''}}" row="0" col="0"></Label>
+                <Label text="{{game.state.currentTurnMoves > 1 ? '->' : ''}}" row="0" col="1"></Label>
+                <Label text="{{game.state.currentTurnMoves > 2 ? '->' : ''}}" row="0" col="2"></Label>
+            </GridLayout>
+        </StackLayout>
     </GridLayout>
 </ActionBar>
 <DockLayout>
@@ -30,7 +29,8 @@
     <StackLayout dock="top" *ngIf="game && game.state.winner==undefined">
         <Button text="Undo" (tap)="onUndoTapped()"></Button>
     </StackLayout>
-    <ListView dock="center" #playerListView [items]="playerListItems" dock="top" *ngIf="game && game.state.winner==undefined">
+    <ListView dock="center" #playerListView [items]="playerListItems" dock="top"
+              *ngIf="game && game.state.winner==undefined">
         <ng-template let-player="item" let-i="index" let-odd="odd" let-even="even">
             <GridLayout columns="30, 50%, 50%">
                 <Label text="*" *ngIf="player.isCurrent" row="0" col="0"></Label>

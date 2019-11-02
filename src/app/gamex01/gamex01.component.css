@@ -1,3 +1,13 @@
 .playerlist {
     border: 2px solid green;
 }
+
+.throw-indicator {
+    border-width: 1px;
+    border-color: black;
+}
+
+.throw-indicator > Label {
+    border-color: black;
+    border-width: 1px;
+}
