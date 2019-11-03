@@ -1,14 +1,21 @@
-import { Injectable } from '@angular/core';
-const appSettings = require("tns-core-modules/application-settings");
+import {Injectable} from '@angular/core';
+import {Couchbase} from 'nativescript-couchbase-plugin';
 
 @Injectable({
-  providedIn: 'root'
+    providedIn: 'root'
 })
 export class PlayerService {
 
-  constructor() { }
+    database = new Couchbase('mazdarts');
+
+    constructor() {
+    }
 
     getPlayers() {
-      return []; //TODO
+        return (this.database.getDocument('players') || {players:[]}).players;
+    }
+
+    updatePlayers(players: any[]) {
+        this.database.createDocument({players}, 'players');
     }
 }

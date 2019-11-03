@@ -1,20 +1,21 @@
 <ActionBar title="{{gameType}}" class="action-bar">
 </ActionBar>
-<ScrollView>
-    <StackLayout>
-        <RadListView row="1" [items]="players" itemReorder="true" (itemReordered)="onItemReordered($event)">
-            <ng-template tkListItemTemplate let-item="item" let-i="index">
-                <StackLayout orientation="horizontal">
-                    <Label [text]="item.name" class="nameLabel"></Label>
-                    <Button text="X" col="0" row="0" (tap)="deletePlayer(index)"></Button>
-                    <Button *ngIf="!item.checked" text="Select" col="2" row="0" (tap)="togglePlayer(item)"></Button>
-                    <Button *ngIf="item.checked" text="Deselect" col="2" row="0" (tap)="togglePlayer(item)"></Button>
-                </StackLayout>
+<DockLayout>
+    <ScrollView dock="top">
+        <RadListView [items]="players" itemReorder="true" (itemReordered)="onItemReordered($event)">
+            <ng-template tkListItemTemplate let-player="item" let-i="index">
+                <GridLayout columns="auto,*,auto" [ngClass]="{checked: player.checked}">
+                    <Button text="X" col="0" row="0" (tap)="deletePlayer(i)"></Button>
+                    <Button *ngIf="!player.checked" text="Select" col="2" row="0" (tap)="togglePlayer(player)"></Button>
+                    <Button *ngIf="player.checked" text="Deselect" col="2" row="0"
+                            (tap)="togglePlayer(player)"></Button>
+                    <Label row="0" col="1" [text]="player.name" class="nameLabel"></Label>
+                </GridLayout>
             </ng-template>
         </RadListView>
-        <StackLayout>
-            <Button text="Add player" (tap)="addPlayer()"></Button>
-            <Button [ngClass]="{ 'btn-active': hasPlayers }" text="Start game" (tap)="startGame()"></Button>
-        </StackLayout>
+    </ScrollView>
+    <StackLayout dock="bottom">
+        <Button text="Add player" (tap)="addPlayer()"></Button>
+        <Button [ngClass]="{ 'btn-active': hasPlayers }" text="Start game" (tap)="startGame()"></Button>
     </StackLayout>
-</ScrollView>
+</DockLayout>
