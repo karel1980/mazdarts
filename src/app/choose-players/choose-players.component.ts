@@ -1,6 +1,8 @@
 import {Component, OnInit} from '@angular/core';
 import * as dialogs from "tns-core-modules/ui/dialogs";
 import {ActivatedRoute, Router} from "@angular/router";
+import { ObservableArray } from '@nativescript/core';
+import {ListViewEventData} from "nativescript-ui-listview";
 
 interface Player {
     name: string,
@@ -14,10 +16,10 @@ interface Player {
 })
 export class ChoosePlayersComponent implements OnInit {
 
-    players = [
+    players = new ObservableArray<Player>([
         {name: "karel", checked: true},
         {name: "felix", checked: true}
-    ];
+    ]);
     hasPlayers: boolean;
 
     gameType: string;
@@ -29,7 +31,12 @@ export class ChoosePlayersComponent implements OnInit {
     }
 
     ngOnInit() {
+
         this.updateHasPlayers();
+    }
+
+    public onItemReordered(args: ListViewEventData) {
+        console.log(this.players);
     }
 
     addPlayer() {
